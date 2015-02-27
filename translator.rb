@@ -32,7 +32,7 @@ class Translator < Sinatra::Base
     elsif params["genre"]
       Item.where(genre: params["genre"]).id
     else
-      session[:error_message = "Could not find any items from that request. Please try again."]
+      session[:error_message] = "Could not find any items from that request. Please try again."
     end 
     erb :shelf
   end
