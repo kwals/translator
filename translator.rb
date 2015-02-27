@@ -8,7 +8,7 @@ require 'pry'
 require './db/setup'
 require './lib/all'
 
-class Spotibetical < Sinatra::Base
+class Translator < Sinatra::Base
 
   enable :sessions, :method_override
 
@@ -43,7 +43,7 @@ class Spotibetical < Sinatra::Base
   end
 
   post '/Item'
-    x = current_user.create_item!(language_from: params["language_from"], language_to: params["language_to"], original_text: params["original_text"], translated_text: params["translated_text"], genre: params["genre"], user_content: params["user_content"])
+    x = current_user.create_item!(original_text: params["original_text"], translated_text: params["translated_text"], user_content: params["user_content"], original_language: params["original_language"], translated_language: params["translated_language"], genre: params["genre"])
     redirect "/Item/#{x.id}"
   end
 
@@ -51,8 +51,8 @@ class Spotibetical < Sinatra::Base
     erb :view_item
   end
 
-  post '/Item/:id' #update
-    User.(find)session[user_id:].comment!(params[:id])
+  post '/Item/:id'
+    current_user.comment(params["item_id"], params["content"])
   end
 
   #USER ROUTES
@@ -65,7 +65,19 @@ class Spotibetical < Sinatra::Base
   end
 
   patch '/User/:id'
-    User.find(:id).update!(#params)
+    fail
+    #User.find(:id).update!(#params)
+  end
+
+  #COMMENT ROUTES
+  patch '/comment'
+    if params["action"] = "upvote"
+      params["comment_id"].upvote!
+    elsif params["action"] = "downvote"
+      params["comment_id"].downvote!
+    end
   end
 
 end
+
+Translator.run! if $PROGRAM_NAME == __FILE__
