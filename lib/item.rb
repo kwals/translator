@@ -1,6 +1,7 @@
 class Item <ActiveRecord::Base
   belongs_to :user
   has_many :comments
+  validates :title, presence: true
 
   def self.sort_by_comments 
     sorter = {}
