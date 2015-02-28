@@ -2,8 +2,8 @@ require 'sinatra/base'
 require 'pry'
 
 #require 'rollbar'
-#require 'mandrill'
-#require 'digest'
+# require 'mandrill'
+require 'digest'
 
 require './db/setup'
 require './lib/all'
@@ -13,8 +13,36 @@ class Translator < Sinatra::Base
   enable :sessions, :method_override
 
   def current_user
-    # fail  #remember to remove before merging
-    User.first
+    if session[:user_id]
+      User.find(session[:user_id])
+    end
+  end
+
+  post '/user/login' do
+    user = User.where(
+      email: params["email"], 
+      password: Digest::SHA1.hexdigest(params["password"])
+    ).first
+
+    if user
+      session[:user_id] = user.id
+      if session["return_trip"]
+        path = session["return_trip"]
+        session.delete("return_trip")
+        redirect to(path)
+      else
+        redirect to('/')
+      end
+    else
+      @error = true 
+      status 422
+      erb :home
+    end
+  end
+
+  delete '/user/logout' do
+    session.delete(:user_id)
+    redirect to('/')
   end
 
   get '/' do
