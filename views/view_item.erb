@@ -1,24 +1,32 @@
-<!-- This is where you can look at a particular item and read comments and comment if you would like -->
-<html>
-<head> 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <title>Item</title>
-</head>
 <body>
   <div class="container">
     <div class="row"id="Item">
       <% item = Item.find(@id) %>
-      <h3><%=item.title%></h3>
-      <p><%=item.original_text%></p>
-      <p><%=item.translated_text%></p>
-      <p><%=item.user_content%></p>>
+      <h3>Topic: <%=item.title%></h3>
+      <div></div>
+      <h4>Original Text in <%=item.original_language%></h4>
+      <p class ="well"><%=item.original_text%></p>
+      <h4>Translated Text in <%=item.translated_language%></h4>
+      <p class = "well"><%=item.translated_text%></p>
+      <h4>Description</h4>
+      <p class="well"><%=item.user_content%></p>
     </div>
-    <% comments = item.comments.all %>
-    <%comments.each do |comment|%>
-    <div class="row" id="comment"> 
-    <p><%=comment.content%></p>
-    </div> 
-    <%end%>
+    <h3>Comments</h3>
+    <div class="row well">
+      <% comments = item.comments.all %>
+      <%comments.each do |comment|%>
+      <div class="row" style="border-style:solid; border-color:grey; padding:5px" id="comment"> 
+        <h4 style="text-bold">User: <%=User.find(comment.user_id).name%></h4>
+        <p> <%=comment.content%> </p>
+      </div> 
+      <br>
+      <%end%>
+    <form>
+      <textarea class="form-control" name ="comment" rows="3"></textarea>
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+    </div>
   </div>
   </div
 </body>
