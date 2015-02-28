@@ -1,0 +1,60 @@
+<html>
+<head> 
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <title> New Item </title>
+</head>
+<body>
+  <div class="container">
+    <form action="/item" method="POST" role="form">
+     <div class ="form-group">
+      <label>Topic:</label>
+      <input></input>
+    </div>
+    <div class ="form-group" value="original_language">
+      <label>Original Text Language</label>
+      <select class="form-control">
+        <option>Chinese</option>
+        <option>French</option>
+        <option>Korean</option>
+        <option>Russian</option>
+        <option>Spanish</option>
+      </select>
+    </div>
+    <div class ="form-group" name= "original_text">
+      <label>Original Text</label>
+      <textarea class="form-control" rows="3"></textarea>
+    </div>
+    <div class ="form-group" name="translated_language">
+      <label>Translated Text Language</label>
+      <select class="form-control">
+        <option>Chinese</option>
+        <option>French</option>
+        <option>Korean</option>
+        <option>Russian</option>
+        <option>Spanish</option>
+      </select>
+    </div>
+    <div class ="form-group" name="translated_text">
+      <label>Translated Text</label>
+      <textarea class="form-control" rows="3"></textarea>
+    </div>
+    <div class ="form-group" name="user_content">
+      <label>Comments</label>
+      <textarea class="form-control" rows="3"></textarea>
+    </div>
+    <div class ="form-group" name="genre">
+      <label>Genre</label>
+      <select class="form-control">
+        <option>Poetry</option>
+        <option>Prose</option>
+        <option>Non-Fiction</option>
+        <option>Speech</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <button type= "submit" class="btn">Submit</button>
+  </form>
+  </div
+</body>
+</html>
+

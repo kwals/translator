@@ -40,7 +40,6 @@ class Translator < Sinatra::Base
 
   #ITEM ROUTES
   get '/item' do
-    @item = Item.find(params["id"])
     erb :create_item
   end
 
@@ -50,7 +49,7 @@ class Translator < Sinatra::Base
   end
 
   get '/item/:id' do
-    @item = Item.find(params["id"])
+    @id = params["id"]
     erb :view_item
   end
 
