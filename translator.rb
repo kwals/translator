@@ -13,7 +13,8 @@ class Translator < Sinatra::Base
   enable :sessions, :method_override
 
   def current_user
-    fail
+    # fail  #remember to remove before merging
+    User.first
   end
 
   get '/' do
@@ -58,7 +59,6 @@ class Translator < Sinatra::Base
 
   #USER ROUTES
   get '/user/:id' do
-    @user = User.find(params["id"])
     erb :user_profile
   end
 
