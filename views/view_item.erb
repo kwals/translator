@@ -21,11 +21,13 @@
       </div> 
       <br>
       <%end%>
-    <form>
-      <textarea class="form-control" name ="comment" rows="3"></textarea>
-      <br>
-      <button type="submit">Submit</button>
-    </form>
+      <% if current_user %>
+        <form>
+          <textarea class="form-control" name ="comment" rows="3"></textarea>
+          <br>
+          <button type="submit">Submit</button>
+        </form>
+       <% end %> 
     </div>
   </div>
   </div
