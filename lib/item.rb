@@ -3,7 +3,8 @@ class Item <ActiveRecord::Base
   has_many :comments
 
   def self.rank_by_comments 
-    sorter = []
-    sorter = Item.all.map {|i| [i.id, i.comments.count]}
+    sorter = {}
+    Item.all.each {|i| sorter[i.comments.count] = i.id}
+    sorter.sort_by{|count, id| count}.reverse
   end
 end
