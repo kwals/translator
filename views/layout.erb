@@ -1,0 +1,26 @@
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>Cool_Name</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-1"><a href="/">Home</a></div>
+      <div class="col-sm-1"><a href="/users/:id">Profile</a></div>
+      <div class="col-sm-1"><a href="/shelves">Shelves</a></div>
+      <div class="col-sm-1"><a href="/item">Items</a></div>
+    
+  </div>
+  
+  <% if session["error_message"] %>
+    <div>
+      <div class="alert alert-danger" role="alert"><%= session["error_message"] %></div>
+      <% session.delete("error_message") %>
+    </div>
+  <% end %> 
+
+  <%= yield %>
+
+  </body>
+</html>
