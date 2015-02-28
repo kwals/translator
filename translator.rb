@@ -60,7 +60,6 @@ class Translator < Sinatra::Base
 
   #USER ROUTES
   get '/user/:id' do
-    @user_id = params["id"]
     erb :user_profile
   end
 

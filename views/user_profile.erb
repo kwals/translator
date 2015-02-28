@@ -10,7 +10,7 @@
           <p class="lead"><strong>Email: </strong><%= current_user.email %></p>
 
           <div style="padding: 2em 0em;">
-            <form method="get" action="/users/profile/edit"><button class="btn btn-info" type="submit">Edit Your Profile</button></form>
+            <form method="get" action="/user/<%=current_user.id%>/edit"><button class="btn btn-info" type="submit">Edit Your Profile</button></form>
           </div>
         </div>
       </div>
@@ -26,7 +26,20 @@
                 <% end %>
             </tbody>
           </table>
-          
+        </div>
+      </div>
+
+       <div class="panel panel-default">
+        <div class="panel-body">
+          <p class="lead"><strong>Recent Comments: </strong> </p>
+          <table>
+            <tbody>
+              <% x = Comment.where(user_id: @user_id).order(created_at: :desc).limit(10) %>
+                <% x.each do |comment| %>
+                <tr><td><a href="/item/<%="#{comment.item_id}"%>"><%= comment["content"] %></a></td></tr>
+                <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
 
