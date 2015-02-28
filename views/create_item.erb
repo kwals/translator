@@ -8,11 +8,11 @@
     <form action="/item" method="POST" role="form">
      <div class ="form-group">
       <label>Topic:</label>
-      <input></input>
+      <input name="title"></input>
     </div>
-    <div class ="form-group" value="original_language">
+    <div class ="form-group">
       <label>Original Text Language</label>
-      <select class="form-control">
+      <select class="form-control" name="original_language">
         <option>Chinese</option>
         <option>French</option>
         <option>Korean</option>
@@ -20,13 +20,13 @@
         <option>Spanish</option>
       </select>
     </div>
-    <div class ="form-group" name= "original_text">
+    <div class ="form-group">
       <label>Original Text</label>
-      <textarea class="form-control" rows="3"></textarea>
+      <textarea class="form-control" name ="original_text" rows="3"></textarea>
     </div>
-    <div class ="form-group" name="translated_language">
+    <div class ="form-group">
       <label>Translated Text Language</label>
-      <select class="form-control">
+      <select class="form-control" name="translated_language">
         <option>Chinese</option>
         <option>French</option>
         <option>Korean</option>
@@ -34,17 +34,17 @@
         <option>Spanish</option>
       </select>
     </div>
-    <div class ="form-group" name="translated_text">
+    <div class ="form-group">
       <label>Translated Text</label>
-      <textarea class="form-control" rows="3"></textarea>
+      <textarea class="form-control" rows="3" name="translated_text"></textarea>
     </div>
-    <div class ="form-group" name="user_content">
+    <div class ="form-group">
       <label>Comments</label>
-      <textarea class="form-control" rows="3"></textarea>
+      <textarea class="form-control" rows="3" name="user_content"></textarea>
     </div>
-    <div class ="form-group" name="genre">
+    <div class ="form-group">
       <label>Genre</label>
-      <select class="form-control">
+      <select class="form-control" name="genre">
         <option>Poetry</option>
         <option>Prose</option>
         <option>Non-Fiction</option>
