@@ -2,8 +2,8 @@ require 'sinatra/base'
 require 'pry'
 
 #require 'rollbar'
-#require 'mandrill'
-#require 'digest'
+# require 'mandrill'
+require 'digest'
 
 require './db/setup'
 require './lib/all'
@@ -12,9 +12,55 @@ class Translator < Sinatra::Base
 
   enable :sessions, :method_override
 
+LOGIN_REQUIRED_ROUTES = [
+  "/user/*",
+  # "/user/#{current_user.id}",
+  # "/user/#{current_user.id}/*",
+  "/item/:id/*"
+]
+
   def current_user
-    # fail  #remember to remove before merging
-    User.first
+    if session[:user_id]
+      User.find(session[:user_id])
+    end
+  end
+
+  LOGIN_REQUIRED_ROUTES.each do |path|
+    before path do
+      if current_user.nil?
+        session[:error_message] = "You must log in to see this feature"
+        session[:return_trip] = path
+        redirect to('/')
+        return
+      end
+    end 
+  end
+
+  post '/login' do
+    user = User.where(
+      email: params["email"], 
+      password: Digest::SHA1.hexdigest(params["password"])
+    ).first
+
+    if user
+      session[:user_id] = user.id
+      if session["return_trip"]
+        path = session["return_trip"]
+        session.delete("return_trip")
+        redirect to(path)
+      else
+        redirect to('/')
+      end
+    else
+      @error = true 
+      status 422
+      erb :home
+    end
+  end
+
+  delete '/logout' do
+    session.delete(:user_id)
+    redirect to('/')
   end
 
   get '/' do
@@ -53,10 +99,6 @@ class Translator < Sinatra::Base
     erb :view_item
   end
 
-  post '/item/:id' do
-    current_user.comment(params["item_id"], params["content"])
-  end
-
   #USER ROUTES
   get '/user/:id' do
     erb :user_profile
@@ -80,6 +122,10 @@ class Translator < Sinatra::Base
     elsif params["action"] = "downvote"
       params["comment_id"].downvote!
     end
+  end
+
+  post '/item/:id/comment' do
+    current_user.comment(params["item_id"], params["content"])
   end
 
 end
