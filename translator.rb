@@ -12,13 +12,31 @@ class Translator < Sinatra::Base
 
   enable :sessions, :method_override
 
+LOGIN_REQUIRED_ROUTES = [
+  "/user/*",
+  # "/user/#{current_user.id}",
+  # "/user/#{current_user.id}/*",
+  "/item/:id/*"
+]
+
   def current_user
     if session[:user_id]
       User.find(session[:user_id])
     end
   end
 
-  post '/user/login' do
+  LOGIN_REQUIRED_ROUTES.each do |path|
+    before path do
+      if current_user.nil?
+        session[:error_message] = "You must log in to see this feature"
+        session[:return_trip] = path
+        redirect to('/')
+        return
+      end
+    end 
+  end
+
+  post '/login' do
     user = User.where(
       email: params["email"], 
       password: Digest::SHA1.hexdigest(params["password"])
@@ -40,7 +58,7 @@ class Translator < Sinatra::Base
     end
   end
 
-  delete '/user/logout' do
+  delete '/logout' do
     session.delete(:user_id)
     redirect to('/')
   end
@@ -81,10 +99,6 @@ class Translator < Sinatra::Base
     erb :view_item
   end
 
-  post '/item/:id' do
-    current_user.comment(params["item_id"], params["content"])
-  end
-
   #USER ROUTES
   get '/user/:id' do
     erb :user_profile
@@ -108,6 +122,10 @@ class Translator < Sinatra::Base
     elsif params["action"] = "downvote"
       params["comment_id"].downvote!
     end
+  end
+
+  post '/item/:id/comment' do
+    current_user.comment(params["item_id"], params["content"])
   end
 
 end
