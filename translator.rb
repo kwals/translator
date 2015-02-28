@@ -13,7 +13,8 @@ class Translator < Sinatra::Base
   enable :sessions, :method_override
 
   def current_user
-    fail
+    # fail  #remember to remove before merging
+    User.first
   end
 
   get '/' do
@@ -43,7 +44,6 @@ class Translator < Sinatra::Base
   end
 
   post '/item' do
-    binding.pry
     x = current_user.create_item!(title: params["title"], original_text: params["original_text"], translated_text: params["translated_text"], user_content: params["user_content"], original_language: params["original_language"], translated_language: params["translated_language"], genre: params["genre"])
     redirect "/item/#{x.id}"
   end
@@ -59,7 +59,6 @@ class Translator < Sinatra::Base
 
   #USER ROUTES
   get '/user/:id' do
-    @user = User.find(params["id"])
     erb :user_profile
   end
 
