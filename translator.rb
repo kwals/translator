@@ -131,7 +131,8 @@ LOGIN_REQUIRED_ROUTES = [
 
   post '/translate' do
     @original_text = params["text"]
-    @translation = Yandex.translate(params["text"].chomp)
+    @target_language = params["lang"]
+    @translation = Yandex.translate(params["text"],params["lang"])
     erb :create_item
   end
 end
