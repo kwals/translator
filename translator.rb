@@ -86,19 +86,9 @@ class Translator < Sinatra::Base
   end  
 
   get '/shelves' do 
-    erb :shelf
-  end
-
-  post '/shelves' do
-    @results = if params["original_language"]
-      Item.where(original_language: params["original_language"]).id
-    elsif params["translated_language"]
-      Item.where(translated_language: params["translated_language"]).id
-    elsif params["genre"]
-      Item.where(genre: params["genre"]).id
-    else
-      session[:error_message] = "Could not find any items from that request. Please try again."
-    end 
+    @original_language= params["original_language"]
+    @translated_language = params["translated_language"]
+    @genre =params["genre"]
     erb :shelf
   end
 

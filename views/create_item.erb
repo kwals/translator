@@ -1,12 +1,9 @@
-<html>
-<head> 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-        <div class ="form-group">
-      <div class="container">
+
+
+
+<div class="container">
   <div class="row">
-        <div class="col-md-3" id="rightCol">
-              
-          
+    <div class="col-md-3" id="rightCol">
       <label>Need some help getting started?</label>
       <label>Get a Machine Translation</label>
       <h6>Supported languages include English, Russian, Polish, Ukrainian, German, French, Italian, Bulgarian, Czech, Turkish, Romanian and BCS.</h6>
@@ -31,26 +28,19 @@
         <option value="sr">BCS</option>
       </select>
        <button type= "submit" class="btn">Translate</button>
-       </form>
-       </div>
+     </form>
+   </div>
 
-       <% if @translation %>
-        <div class ="form-group">
-      <label><u> Your original text </u> </label>
-      <h5><%= @original_text %></h5>
-      <label><u> Yandex's Translation </u></label>
-      <h5> <%= @translation %> </h5>
-       </form>
-       </div>
-       <% end %>
-        </div> 
-        <hr noshade size=1>
-  </div>
-  </div>
+   <% if @translation %>
+    <% original = @original_text %>
+    <% translated=  @translation %>  
+  <%else %>
+    <% original = "" %>
+    <% translated=  "" %>  
+  <% end %>
+
   <title> New Item </title>
-</head>
-<body>
-  <div class="container">
+  <div class='col-md-8'>
     <form action="/item" method="POST" role="form">
      <div class ="form-group">
       <label>Topic:</label>
@@ -59,30 +49,26 @@
     <div class ="form-group">
       <label>Original Text Language</label>
       <select class="form-control" name="original_language">
-        <option>Chinese</option>
-        <option>French</option>
-        <option>Korean</option>
-        <option>Russian</option>
-        <option>Spanish</option>
+        <% LANGUAGES.each do |language, abb| %>
+        <option value='<%=abb%>'><%=language%></option>
+        <%end%>
       </select>
     </div>
     <div class ="form-group">
       <label>Original Text</label>
-      <textarea class="form-control" name ="original_text" rows="3"></textarea>
+      <textarea class="form-control" name ="original_text" rows="3"><%=original %></textarea>
     </div>
     <div class ="form-group">
       <label>Translated Text Language</label>
       <select class="form-control" name="translated_language">
-        <option>Chinese</option>
-        <option>French</option>
-        <option>Korean</option>
-        <option>Russian</option>
-        <option>Spanish</option>
+        <% LANGUAGES.each do |language, abb| %>
+        <option value='<%=abb%>'><%=language%></option>
+        <%end%>
       </select>
     </div>
     <div class ="form-group">
       <label>Translated Text</label>
-      <textarea class="form-control" rows="3" name="translated_text"></textarea>
+      <textarea class="form-control" rows="3" name="translated_text"><%=translated %></textarea>
     </div>
     <div class ="form-group">
       <label>Comments</label>
@@ -91,17 +77,13 @@
     <div class ="form-group">
       <label>Genre</label>
       <select class="form-control" name="genre">
-        <option>Poetry</option>
-        <option>Prose</option>
-        <option>Non-Fiction</option>
-        <option>Speech</option>
-        <option>Other</option>
+        <% GENRES.each do |genre| %>
+        <option><%=genre%></option>
+        <%end%>
       </select>
     </div>
-    
+
     <button type= "submit" class="btn">Submit</button>
   </form>
-  </div>
-</body>
-</html>
+</div>
 

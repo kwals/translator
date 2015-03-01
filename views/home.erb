@@ -1,26 +1,51 @@
-<html>
-<head> 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <title> Translator </title>
-</head>
-<!-- create a link in the nav bar for creating a new item -->
-<body>
-  <div class= "container">
-<h4> Welcome to Translator </h4>
-<div class= "row well" id= "Popular items">
-  <h3>Popular Items</h3>
-  <!-- Fill in with top 5 most popular items -->
-  <%item_ids = Item.sort_by_comments[0..4].map {|count,id| id }%>
-  <% item_ids.each do |id| %>
-  <div class ="row">
-    <p> <a href= "/item/<%=id%>"><%=Item.find(id).title%></a></p>
-  </div>
-  <%end%>
 
+
+<div class= "container">
+  <div class ="row">
+    <h2> Welcome to Translator </h2>
+    <p>This site is designed to be used by anyone looking for help with a language translation question. Whether its a question of how something should be translated or why something was translated a certain way, our forum provides you with the means to get answers and insights from users all over the world.
+
+    Once logged in you will be able to create a new item post as well as comment on other people's items.</p>
+  </div>
+  <div class= "row" id= "Popular items">
+    <h3>Popular Items</h3>
+    <%item_ids = Item.sort_by_comments[0..4].map {|count,id| id }%>
+    <% item_ids.each do |id| %>
+      <a href= "/item/<%=id%>"><%=Item.find(id).title%></a>
+      <br>
+    <%end%>
+  </div>
+  <div class= "row" id="Categories">
+    <form action="/shelves" method="GET">
+      <h3>Display Items By:</h3>
+      <div class="form-group">
+        <h5>Original Language:</h5>
+        <select class="form-control" name="original_language">
+          <option>All</option>
+          <% LANGUAGES.each do |language, abb| %>
+          <option value='<%=abb%>'><%=language%></option>
+          <%end%>
+        </select>
+      </div>
+      <div class="form-group">
+        <h5>Translated Language:</h5>
+        <select class="form-control" name="translated_language">
+          <option>All</option>
+          <% LANGUAGES.each do |language, abb| %>
+          <option value='<%=abb%>'><%=language%></option>
+          <%end%>
+        </select>      
+      </div>
+      <div class="form-group">
+        <h5>Genre:</h5>
+        <select class="form-control" name="genre">
+          <option>All</option>
+          <% GENRES.each do |genre| %>
+          <option><%=genre%></option>
+          <%end%>
+        </select>  
+      </div>
+      <button type="submit">Search</button>
+    </form>
+  </div>
 </div>
-<div class= "row" id="Categories">
-  <!-- Need to build search function -->
-</div>
-</body>
-</div>
-</html>
