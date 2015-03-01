@@ -24,7 +24,7 @@ end
 group :production do 
   gem 'pg'
 end
-gem 'microsoft_translator'
+
 gem 'httparty'
 gem 'dotenv'
 
