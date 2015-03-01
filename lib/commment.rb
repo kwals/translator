@@ -9,6 +9,7 @@ class Comment <ActiveRecord::Base
 
   def downvote!
     self.points -= 1
+    self.save!
   end
 
 end

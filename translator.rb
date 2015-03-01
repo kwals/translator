@@ -172,10 +172,12 @@ class Translator < Sinatra::Base
 
   #COMMENT ROUTES
   patch '/comment' do
-    if params["action"] = "upvote"
-      Comment.find(params["comment_id"]).upvote!
-    elsif params["action"] = "downvote"
-      Comment.find(params["comment_id"]).downvote!
+    if params["action"] == "upvote"
+      Comment.find(params["comment_id"].to_i).upvote!
+      redirect back
+    elsif params["action"] == "downvote"
+      Comment.find(params["comment_id"].to_i).downvote!
+      redirect back
     end
   end
 
