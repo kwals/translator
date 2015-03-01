@@ -194,6 +194,11 @@ class Translator < Sinatra::Base
     redirect back
   end
 
+  post '/translate' do
+    @original_text = params["text"]
+    @translation = Yandex.translate(params["text"].chomp)
+    erb :create_item
+  end
 end
 
 Translator.run! if $PROGRAM_NAME == __FILE__
