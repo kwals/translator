@@ -135,7 +135,11 @@ class Translator < Sinatra::Base
 
   #ADMIN ROUTES
   get '/admin' do
-    @users = User.all
+    if params["email"]
+      @admins = User.where(admin: true) + User.where(email: params["email"])
+    else
+      @admins = User.where(admin: true)
+    end
     erb :admin
   end
 
@@ -179,9 +183,9 @@ class Translator < Sinatra::Base
   #COMMENT ROUTES
   patch '/comment' do
     if params["action"] = "upvote"
-      params["comment_id"].upvote!
+      Comment.find(params["comment_id"]).upvote!
     elsif params["action"] = "downvote"
-      params["comment_id"].downvote!
+      Comment.find(params["comment_id"]).downvote!
     end
   end
 
