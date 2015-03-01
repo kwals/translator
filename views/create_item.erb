@@ -1,8 +1,29 @@
 
+
+
 <div class="container">
+  <div class="row">
+    <div class="col-md-3" id="rightCol">
+      <label>Need some help getting started?</label>
+      <label>Get a Machine Translation into English</label>
+      <form action="/translate" method="POST" role="form">
+       <textarea class="form-control" name ="text" rows="3"></textarea>
+       <button type= "submit" class="btn">Translate</button>
+     </form>
+   </div>
+
+   <% if @translation %>
+    <% original = @original_text %>
+    <% translated=  @translation %>  
+  <%else %>
+    <% original = "" %>
+    <% translated=  "" %>  
+  <% end %>
+
+  <title> New Item </title>
   <div class='col-md-8'>
-  <form action="/item" method="POST" role="form">
-    <div class ="form-group">
+    <form action="/item" method="POST" role="form">
+     <div class ="form-group">
       <label>Topic:</label>
       <input name="title"></input>
     </div>
@@ -10,25 +31,25 @@
       <label>Original Text Language</label>
       <select class="form-control" name="original_language">
         <% LANGUAGES.each do |language, abb| %>
-          <option value='<%=abb%>'><%=language%></option>
-            <%end%>
+        <option value='<%=abb%>'><%=language%></option>
+        <%end%>
       </select>
     </div>
     <div class ="form-group">
       <label>Original Text</label>
-      <textarea class="form-control" name ="original_text" rows="3"></textarea>
+      <textarea class="form-control" name ="original_text" rows="3"><%=original %></textarea>
     </div>
     <div class ="form-group">
       <label>Translated Text Language</label>
       <select class="form-control" name="translated_language">
         <% LANGUAGES.each do |language, abb| %>
-          <option value='<%=abb%>'><%=language%></option>
-            <%end%>
+        <option value='<%=abb%>'><%=language%></option>
+        <%end%>
       </select>
     </div>
     <div class ="form-group">
       <label>Translated Text</label>
-      <textarea class="form-control" rows="3" name="translated_text"></textarea>
+      <textarea class="form-control" rows="3" name="translated_text"><%=translated %></textarea>
     </div>
     <div class ="form-group">
       <label>Comments</label>
@@ -38,12 +59,12 @@
       <label>Genre</label>
       <select class="form-control" name="genre">
         <% GENRES.each do |genre| %>
-          <option><%=genre%></option>
-            <%end%>
+        <option><%=genre%></option>
+        <%end%>
       </select>
     </div>
+
     <button type= "submit" class="btn">Submit</button>
   </form>
 </div>
-</div
 
