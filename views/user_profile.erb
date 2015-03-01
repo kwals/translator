@@ -2,17 +2,19 @@
   <div class="col-sm-5">
     <div class="row">
       <div class="page-header">
-        <h2>Cool_Name_User Profile: <small><%= current_user.name %></small></h2>
+        <h2>Cool_Name_User Profile: <small><%= @user.name %></small></h2>
       </div>
 
       <div class="panel panel-default">
+        <% if current_user.id == @user.id %>
         <div class="panel-body">
-          <p class="lead"><strong>Email: </strong><%= current_user.email %></p>
-
+          <p class="lead"><strong>Email: </strong><%= @user.email %></p>
+        
           <div style="padding: 2em 0em;">
-            <form method="get" action="/user/<%=current_user.id%>/edit"><button class="btn btn-info" type="submit">Edit Your Profile</button></form>
+            <form method="get" action="/user/<%=@user.id%>/edit"><button class="btn btn-info" type="submit">Edit Your Profile</button></form>
           </div>
         </div>
+        <% end %>
       </div>
 
        <div class="panel panel-default">
@@ -20,7 +22,7 @@
           <p class="lead"><strong>Recent Items: </strong> </p>
           <table>
             <tbody>
-              <% x = Item.where(user_id: @user_id).limit(10) %>
+              <% x = Item.where(user_id: @user.id).limit(10) %>
                 <% x.each do |item| %>
                 <tr><td><a href="/item/<%="#{item.id}"%>"><%= item["title"] %></a></td></tr>
                 <% end %>
@@ -34,7 +36,7 @@
           <p class="lead"><strong>Recent Comments: </strong> </p>
           <table>
             <tbody>
-              <% x = Comment.where(user_id: @user_id).order(created_at: :desc).limit(10) %>
+              <% x = Comment.where(user_id: @user.id).order(created_at: :desc).limit(10) %>
                 <% x.each do |comment| %>
                 <tr><td><a href="/item/<%="#{comment.item_id}"%>"><%= comment["content"] %></a></td></tr>
                 <% end %>
