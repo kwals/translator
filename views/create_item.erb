@@ -1,5 +1,6 @@
 
 <div class="container">
+  <div class='col-md-8'>
   <form action="/item" method="POST" role="form">
     <div class ="form-group">
       <label>Topic:</label>
@@ -8,11 +9,9 @@
     <div class ="form-group">
       <label>Original Text Language</label>
       <select class="form-control" name="original_language">
-        <option>Chinese</option>
-        <option>French</option>
-        <option>Korean</option>
-        <option>Russian</option>
-        <option>Spanish</option>
+        <% LANGUAGES.each do |language, abb| %>
+          <option value='<%=abb%>'><%=language%></option>
+            <%end%>
       </select>
     </div>
     <div class ="form-group">
@@ -22,11 +21,9 @@
     <div class ="form-group">
       <label>Translated Text Language</label>
       <select class="form-control" name="translated_language">
-        <option>Chinese</option>
-        <option>French</option>
-        <option>Korean</option>
-        <option>Russian</option>
-        <option>Spanish</option>
+        <% LANGUAGES.each do |language, abb| %>
+          <option value='<%=abb%>'><%=language%></option>
+            <%end%>
       </select>
     </div>
     <div class ="form-group">
@@ -40,14 +37,13 @@
     <div class ="form-group">
       <label>Genre</label>
       <select class="form-control" name="genre">
-        <option>Poetry</option>
-        <option>Prose</option>
-        <option>Non-Fiction</option>
-        <option>Speech</option>
-        <option>Other</option>
+        <% GENRES.each do |genre| %>
+          <option><%=genre%></option>
+            <%end%>
       </select>
     </div>
     <button type= "submit" class="btn">Submit</button>
   </form>
+</div>
 </div
 

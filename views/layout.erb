@@ -8,8 +8,8 @@
     <div class="row">
       <div class="col-sm-1"><a href="/">Home</a></div>
       <div class="col-sm-1"><a href="/shelves">Shelves</a></div>
-      <div class="col-sm-1"><a href="/item">Items</a></div>
       <% if current_user %>
+      <div class="col-sm-1"><a href="/item">Create Item</a></div>
       <div class="col-sm-1"><a href="/user/<%=current_user.id%>">Profile</a></div>
         <% if current_user.admin %>
         <div class="col-sm-1"><a href="/admin">Admin</a></div>

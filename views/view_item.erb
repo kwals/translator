@@ -4,9 +4,9 @@
     <% item = Item.find(@id) %>
     <h3>Topic: <%=item.title%></h3>
     <br>
-    <h4>Original Text in <%=item.original_language%></h4>
+    <h4>Original Text in <%=LANGUAGES.key(item.original_language)%></h4>
     <p class ="well"><%=item.original_text%></p>
-    <h4>Translated Text in <%=item.translated_language%></h4>
+    <h4>Translated Text in <%=LANGUAGES.key(item.translated_language)%></h4>
     <p class = "well"><%=item.translated_text%></p>
     <h4>Description</h4>
     <p class="well"><%=item.user_content%></p>

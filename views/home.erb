@@ -1,19 +1,49 @@
 
 
 <div class= "container">
-  <h4> Welcome to Translator </h4>
-  <div class= "row well" id= "Popular items">
+  <div class ="row">
+    <h2> Welcome to Translator </h2>
+    <p>Content</p>
+  </div>
+  <div class= "row" id= "Popular items">
     <h3>Popular Items</h3>
-    <!-- Fill in with top 5 most popular items -->
     <%item_ids = Item.sort_by_comments[0..4].map {|count,id| id }%>
     <% item_ids.each do |id| %>
-    <div class ="row">
-      <p> <a href= "/item/<%=id%>"><%=Item.find(id).title%></a></p>
-    </div>
+      <a href= "/item/<%=id%>"><%=Item.find(id).title%></a>
+      <br>
     <%end%>
-
   </div>
   <div class= "row" id="Categories">
-    <!-- Need to build search function -->
+    <form action="/shelves" method="GET">
+      <h3>Display Items By:</h3>
+      <div class="form-group">
+        <h5>Original Language:</h5>
+        <select class="form-control" name="original_language">
+          <option>All</option>
+          <% LANGUAGES.each do |language, abb| %>
+          <option value='<%=abb%>'><%=language%></option>
+          <%end%>
+        </select>
+      </div>
+      <div class="form-group">
+        <h5>Translated Language:</h5>
+        <select class="form-control" name="translated_language">
+          <option>All</option>
+          <% LANGUAGES.each do |language, abb| %>
+          <option value='<%=abb%>'><%=language%></option>
+          <%end%>
+        </select>      
+      </div>
+      <div class="form-group">
+        <h5>Genre:</h5>
+        <select class="form-control" name="genre">
+          <option>All</option>
+          <% GENRES.each do |genre| %>
+          <option><%=genre%></option>
+          <%end%>
+        </select>  
+      </div>
+      <button type="submit">Search</button>
+    </form>
   </div>
 </div>
