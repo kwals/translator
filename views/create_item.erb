@@ -1,6 +1,33 @@
 <html>
 <head> 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <div class ="form-group">
+      <div class="container">
+  <div class="row">
+        <div class="col-md-3" id="rightCol">
+              
+          
+      <label>Need some help getting started?</label>
+      <label>Get a Machine Translation into English</label>
+       <form action="/translate" method="POST" role="form">
+       <textarea class="form-control" name ="text" rows="3"></textarea>
+       <button type= "submit" class="btn">Translate</button>
+       </form>
+       </div>
+
+       <% if @translation %>
+        <div class ="form-group">
+      <label> Your original text </label>
+      <h5><%= @original_text %></h5>
+      <label>Yandex's Translation</label>
+      <h5> <%= @translation %> </h5>
+       </form>
+       </div>
+       <% end %>
+        </div> 
+        <hr noshade size=1>
+  </div>
+  </div>
   <title> New Item </title>
 </head>
 <body>
@@ -52,23 +79,9 @@
         <option>Other</option>
       </select>
     </div>
-    </div>
+    
     <button type= "submit" class="btn">Submit</button>
   </form>
-      <div class ="form-group">
-      <label>Get a Machine Translation into English</label>
-       <form action="/translate" method="POST" role="form">
-       <textarea class="form-control" name ="text" rows="3"></textarea>
-       <button type= "submit" class="btn">Translate</button>
-       </form>
-       </div>
-       <% if @translation %>
-        <div class ="form-group">
-      <label>Yandex's Translation</label>
-      <h4> <%= @translation %> </h4>
-       </form>
-       </div>
-       <% end %>
   </div>
 </body>
 </html>
