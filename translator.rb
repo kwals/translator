@@ -124,8 +124,9 @@ LOGIN_REQUIRED_ROUTES = [
     end
   end
 
-  post '/item/:id/comment' do
-    current_user.comment(params["item_id"], params["content"])
+  post '/comment' do
+    current_user.comment(params["item_id"], params["comment"])
+    redirect back
   end
 
 end

@@ -1,1 +1,36 @@
-<!-- This is where you can look at a particular item and read comments and comment if you would like -->
+<body>
+  <div class="container">
+    <div class="row"id="Item">
+      <% item = Item.find(@id) %>
+      <h3>Topic: <%=item.title%></h3>
+      <div></div>
+      <h4>Original Text in <%=item.original_language%></h4>
+      <p class ="well"><%=item.original_text%></p>
+      <h4>Translated Text in <%=item.translated_language%></h4>
+      <p class = "well"><%=item.translated_text%></p>
+      <h4>Description</h4>
+      <p class="well"><%=item.user_content%></p>
+    </div>
+    <h3>Comments</h3>
+    <div class="row well">
+      <% comments = item.comments.all %>
+      <%comments.each do |comment|%>
+      <div class="row" style="border-style:solid; border-color:grey; padding:5px" id="comment"> 
+        <h4 style="text-bold">User: <%=User.find(comment.user_id).name%></h4>
+        <p> <%=comment.content%> </p>
+      </div> 
+      <br>
+      <%end%>
+      <% if current_user %>
+        <form action="/comment" method="POST">
+          <input type="hidden" name="item_id" value=<%=@id%></input>
+          <textarea class="form-control" name ="comment" rows="3"></textarea>
+          <br>
+          <button type="submit">Submit</button>
+        </form>
+       <% end %> 
+    </div>
+  </div>
+  </div
+</body>
+</html>
