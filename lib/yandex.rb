@@ -16,6 +16,10 @@ class Yandex
       'text' => text,
       'lang' => lang}
       )
-    translation = response["text"]
+    if response["code"] > 200
+      return false
+    else
+      "#{response['lang']} \n \t #{response["text"]}"
+    end
   end
 end
