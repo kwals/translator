@@ -45,6 +45,13 @@
     </div>
   <% end %> 
 
+  <% if session["success_message"] %>
+    <div>
+      <div class="alert alert-success" role="alert"><%= session["success_message"] %></div>
+      <% session.delete("success_message") %>
+    </div>
+  <% end %> 
+
   <%= yield %>
 
   </body>

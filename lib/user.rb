@@ -20,4 +20,8 @@ class User <ActiveRecord::Base
   def comment item, content
     self.comments.create!(item_id: item.id, content: content)
   end
+
+  def self.create_user name, email, password
+    User.create!(name: name, email: email.downcase, password: Digest::SHA1.hexdigest(password))
+  end
 end

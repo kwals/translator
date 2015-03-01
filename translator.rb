@@ -12,12 +12,16 @@ class Translator < Sinatra::Base
 
   enable :sessions, :method_override
 
-LOGIN_REQUIRED_ROUTES = [
-  "/user/*",
-  # "/user/#{current_user.id}",
-  # "/user/#{current_user.id}/*",
-  "/item/:id/*"
-]
+  ADMIN_REQUIRED_ROUTES = [
+    "/admin",
+    "/admin/*",
+    "/create_account"
+  ]
+
+  LOGIN_REQUIRED_ROUTES = [
+    "/user/*",
+    "/item/:id/*"
+  ] + ADMIN_REQUIRED_ROUTES
 
   def current_user
     if session[:user_id]
@@ -28,17 +32,24 @@ LOGIN_REQUIRED_ROUTES = [
   LOGIN_REQUIRED_ROUTES.each do |path|
     before path do
       if current_user.nil?
-        session[:error_message] = "You must log in to see this feature"
+        session[:error_message] = "You must log in to see this feature."
         session[:return_trip] = path
         redirect to('/')
         return
+      end
+      if ADMIN_REQUIRED_ROUTES.include?(path)
+        unless current_user.admin
+          session[:error_message] = "You don't have permission to access this."
+          session[:return_trip] = path 
+          redirect to('/')
+        end
       end
     end 
   end
 
   post '/login' do
     user = User.where(
-      email: params["email"], 
+      email: params["email"].downcase, 
       password: Digest::SHA1.hexdigest(params["password"])
     ).first
 
@@ -113,6 +124,38 @@ LOGIN_REQUIRED_ROUTES = [
     @user = User.find(params["id"])
     fail
     #User.find(:id).update!(#params)
+  end
+
+  #ADMIN ROUTES
+  get '/admin' do
+    @users = User.all
+    erb :admin
+  end
+
+  patch '/admin/manage' do
+    if params["action"] == "enable"
+      User.find(params["id"]).update!(admin: true)
+      session[:success_message] = "Success! User #{User.find(params["id"]).name}, ID #{params["id"]}, admin privileges GRANTED."
+      redirect '/admin'
+    elsif params["action"] == "disable"
+      x = User.find(params["id"]).update!(admin: false)
+      session[:success_message] = "Success! User #{User.find(params["id"]).name}, ID #{params["id"]}, admin privileges REVOKED."
+      redirect '/admin'
+    else
+      session[:error_message] = "There was an error updating admin privileges for User ID #{params["id"]}. Please try again."
+      redirect '/admin'
+    end
+  end
+
+  post '/create_account' do
+    begin 
+      x = User.create_user(params["name"], params["email"], params["password"])
+      session[:success_message] = "User account for #{x.name} created succesfully. Account ID is #{x.id}."
+    rescue 
+      session[:error_message] = "User creation failed. Please try again."
+    ensure 
+      redirect '/admin'
+    end
   end
 
   #COMMENT ROUTES
