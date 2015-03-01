@@ -9,13 +9,13 @@
       <div class="col-sm-1"><a href="/">Home</a></div>
       <div class="col-sm-1"><a href="/shelves">Shelves</a></div>
       <div class="col-sm-1"><a href="/item">Items</a></div>
-    </div>
-  
       <% if current_user %>
       <div class="col-sm-1"><a href="/user/<%=current_user.id%>">Profile</a></div>
-      <div class="col-sm-4">
-        <form class="form-inline" role="form" action="/logout" method="POST">
-          
+        <% if current_user.admin %>
+        <div class="col-sm-1"><a href="/admin">Admin</a></div>
+        <% end %>
+      <div class="col-sm-4" align="right">
+        <form class="form-inline" role="form" action="/logout" method="POST">      
           Logged in as: <%= current_user.name %>
           <input type="hidden" name="_method" value="DELETE">
           <button class="btn btn-danger">Logout</button>
@@ -28,7 +28,7 @@
             <label class="sr-only" for="input-email">Email address</label>
             <input name="email" type="email" class="form-control" id="input-email" placeholder="Enter email">
           </div>
-          <div class="form-group">
+          <div class="form-group" align="right">
             <label class="sr-only" for="input-password">Password</label>
             <input name="password" type="password" class="form-control" id="input-password" placeholder="Password">
           </div>
@@ -36,12 +36,20 @@
         </form>
       </div>
       <% end %>
-    </div>  
+    </div>
+  </div>  
 
   <% if session["error_message"] %>
     <div>
       <div class="alert alert-danger" role="alert"><%= session["error_message"] %></div>
       <% session.delete("error_message") %>
+    </div>
+  <% end %> 
+
+  <% if session["success_message"] %>
+    <div>
+      <div class="alert alert-success" role="alert"><%= session["success_message"] %></div>
+      <% session.delete("success_message") %>
     </div>
   <% end %> 
 
