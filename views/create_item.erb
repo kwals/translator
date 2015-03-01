@@ -56,16 +56,16 @@
     <button type= "submit" class="btn">Submit</button>
   </form>
       <div class ="form-group">
-      <label>Get a Machine Translation</label>
-      <textarea class="form-control" name ="text" rows="3"></textarea>
+      <label>Get a Machine Translation into English</label>
        <form action="/translate" method="POST" role="form">
+       <textarea class="form-control" name ="text" rows="3"></textarea>
        <button type= "submit" class="btn">Translate</button>
        </form>
        </div>
        <% if @translation %>
         <div class ="form-group">
       <label>Yandex's Translation</label>
-      <h6> <%= @translation %>
+      <h4> <%= @translation %> </h4>
        </form>
        </div>
        <% end %>
