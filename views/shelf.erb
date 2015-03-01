@@ -1,1 +1,21 @@
 <!-- This is where you can view a shelf -->
+<h1>View Translations</h1>
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+    <th>Original Language</th>
+    <th>Translated Language</th>
+    <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item["original_language"]%></td>
+        <td><%= item["translated_language"]%></td>
+        <td><a href="/item/<%= item['id'] %>"><%= item["title"]%></a> </td>
+        </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
