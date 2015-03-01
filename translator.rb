@@ -120,16 +120,17 @@ class Translator < Sinatra::Base
 
   #USER ROUTES
   get '/user/:id' do
+    @user = User.find(params["id"])
     erb :user_profile
   end
 
   get '/user/:id/edit' do
-    @user = User.find(params["id"])
+    @user = User.find(current_user.id)
     erb :edit_profile
   end
 
   patch '/user/:id' do
-    @user = User.find(params["id"])
+    @user = User.find(current_user.id)
     fail
     #User.find(:id).update!(#params)
   end
@@ -145,6 +146,7 @@ class Translator < Sinatra::Base
   end
 
   patch '/admin/manage' do
+    
     if params["action"] == "enable"
       User.find(params["id"]).update!(admin: true)
       session[:success_message] = "Success! User #{User.find(params["id"]).name}, ID #{params["id"]}, admin privileges GRANTED."
