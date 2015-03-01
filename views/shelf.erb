@@ -1,1 +1,31 @@
 <!-- This is where you can view a shelf -->
+<h1>View Translations</h1>
+
+<form style='float: left; padding: 5px;' action="/shelf" method="GET">
+  <input name="sort" value="alpha" type="hidden">
+  <button class="btn btn-sm btn-primary">Sort by genre</button>
+</form>
+<form style='float: left; padding: 5px;' action="/shelf" method="GET">
+  <input type="hidden">
+  <button class="btn btn-sm btn-success">Sort by original language</button>
+</form>
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+    <th></th>
+    <th>Title</th>
+    <th>Preview</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item["original_language"]%></td>
+        <td><%= song["title"]%></td>
+        <td>
+          <button><a href=<%= song["preview_link"]%>>♬</a></button>
+        </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
