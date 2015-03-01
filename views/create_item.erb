@@ -5,9 +5,28 @@
   <div class="row">
     <div class="col-md-3" id="rightCol">
       <label>Need some help getting started?</label>
-      <label>Get a Machine Translation into English</label>
-      <form action="/translate" method="POST" role="form">
+      <label>Get a Machine Translation</label>
+      <h6>Supported languages include English, Russian, Polish, Ukrainian, German, French, Italian, Bulgarian, Czech, Turkish, Romanian and BCS.</h6>
+       <form action="/translate" method="POST" role="form">
        <textarea class="form-control" name ="text" rows="3"></textarea>
+       <h6> Original language will be automatically detected.</h6>
+       
+          <label>Target Language</label>
+      <select class="form-control" name="lang">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+        <option value="pl">Polish</option>
+        <option value="uk">Ukrainian</option>
+        <option value="de">German</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="it">Italian</option>
+        <option value="bg">Bulgarian</option>
+        <option value="cs">Czech</option>
+        <option value="tr">Turkish</option>
+        <option value="ro">Romanian</option>
+        <option value="sr">BCS</option>
+      </select>
        <button type= "submit" class="btn">Translate</button>
      </form>
    </div>
