@@ -89,6 +89,16 @@ class Translator < Sinatra::Base
     @original_language= params["original_language"]
     @translated_language = params["translated_language"]
     @genre =params["genre"]
+
+    if params["original_language"] != "All"
+      @items = Item.where(original_language: @original_language).first(15)
+    elsif params["translated_language"] !="All"
+      @items = Item.where(translated_language: @translated_language).first(15)
+    elsif params["genre"] != "All"
+      @items = Item.order(genre: @genre).first(15)
+    else
+      @items = Item.first(15)
+    end
     erb :shelf
   end
 
