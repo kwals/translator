@@ -62,6 +62,13 @@
        <button type= "submit" class="btn">Translate</button>
        </form>
        </div>
+       <% if @translation %>
+        <div class ="form-group">
+      <label>Yandex's Translation</label>
+      <h6> <%= @translation %>
+       </form>
+       </div>
+       <% end %>
   </div>
 </body>
 </html>

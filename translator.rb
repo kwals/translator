@@ -129,6 +129,11 @@ LOGIN_REQUIRED_ROUTES = [
     redirect back
   end
 
+  post '/translate' do
+    binding.pry
+    @translation = Yandex.translate(params["text"])
+    erb :create_item
+  end
 end
 
 Translator.run! if $PROGRAM_NAME == __FILE__

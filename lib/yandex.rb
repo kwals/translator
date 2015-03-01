@@ -12,8 +12,10 @@ class Yandex
 
   def self.translate text
     new_text = HTTParty.post('https://translate.yandex.net/api/v1.5/tr.json/translate',
-      headers: Yandex.header,
-      body: {'text' => text}
+      body:{'key' => ENV['YANDEX_KEY'],
+      'text' => text,
+      'lang' => "en"}
       )
+    new_text.to_json
   end
 end
