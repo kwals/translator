@@ -198,11 +198,11 @@ class Translator < Sinatra::Base
     @original_text = params["text"]
     @target_language = params["lang"]
     @translation = Yandex.translate(params["text"],params["lang"])
-    binding.pry
     if @translation
       erb :create_item
     else
       session[:error_message] = "That's not possible. Sorry."
+      redirect to("/item") 
     end
   end
 end
