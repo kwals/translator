@@ -8,18 +8,37 @@
               
           
       <label>Need some help getting started?</label>
-      <label>Get a Machine Translation into English</label>
+      <label>Get a Machine Translation</label>
+      <h6>Supported languages include English, Russian, Polish, Ukrainian, German, French, Italian, Bulgarian, Czech, Turkish, Romanian and BCS.</h6>
        <form action="/translate" method="POST" role="form">
        <textarea class="form-control" name ="text" rows="3"></textarea>
+       <h6> Original language will be automatically detected.</h6>
+       
+          <label>Target Language</label>
+      <select class="form-control" name="lang">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+        <option value="pl">Polish</option>
+        <option value="uk">Ukrainian</option>
+        <option value="de">German</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="it">Italian</option>
+        <option value="bg">Bulgarian</option>
+        <option value="cs">Czech</option>
+        <option value="tr">Turkish</option>
+        <option value="ro">Romanian</option>
+        <option value="sr">BCS</option>
+      </select>
        <button type= "submit" class="btn">Translate</button>
        </form>
        </div>
 
        <% if @translation %>
         <div class ="form-group">
-      <label> Your original text </label>
+      <label><u> Your original text </u> </label>
       <h5><%= @original_text %></h5>
-      <label>Yandex's Translation</label>
+      <label><u> Yandex's Translation </u></label>
       <h5> <%= @translation %> </h5>
        </form>
        </div>

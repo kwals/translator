@@ -196,8 +196,14 @@ class Translator < Sinatra::Base
 
   post '/translate' do
     @original_text = params["text"]
-    @translation = Yandex.translate(params["text"].chomp)
-    erb :create_item
+    @target_language = params["lang"]
+    @translation = Yandex.translate(params["text"],params["lang"])
+    if @translation
+      erb :create_item
+    else
+      session[:error_message] = "That's not possible. Sorry."
+      redirect to("/item") 
+    end
   end
 end
 
