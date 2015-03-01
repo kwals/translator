@@ -174,8 +174,10 @@ class Translator < Sinatra::Base
   patch '/comment' do
     if params["action"] == "upvote"
       Comment.find(params["comment_id"].to_i).upvote!
+      redirect back
     elsif params["action"] == "downvote"
       Comment.find(params["comment_id"].to_i).downvote!
+      redirect back
     end
   end
 
