@@ -21,7 +21,8 @@ class Translator < Sinatra::Base
 
   LOGIN_REQUIRED_ROUTES = [
     "/user/*",
-    "/item/:id/*"
+    "/item/:id/*",
+    "/comment"
   ] + ADMIN_REQUIRED_ROUTES
 
   def current_user

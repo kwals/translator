@@ -18,18 +18,21 @@
     <div class="row" style="border-style:solid; border-color:grey; padding:5px" id="comment"> 
       <h4 style="text-bold">User: <%=User.find(comment.user_id).name%></h4>
       <p> <%=comment.content%> </p>
+      <p><strong>Current Points: </strong><%= comment.points %></p>
+    <%if current_user%>
     <form action = "/comment" method = "POST">
       <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="comment_id" value= "<%=comment.id.to_s%>" >
+      <input type="hidden" name="comment_id" value= "<%=comment.id%>" >
       <input type="hidden" name="action" value="upvote">
       <button type="submit">upvote</button>
     </form>
     <form action = "/comment" method = "POST">
       <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="comment_id" value= "<%=comment.id.to_s%>" >
+      <input type="hidden" name="comment_id" value= "<%=comment.id%>" >
       <input type="hidden" name="action" value="downvote">
       <button type="submit">downvote</button>
     </form>
+    <%end%>
     </div> 
     <br>
     <%end%>
