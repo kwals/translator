@@ -16,7 +16,7 @@ class User <ActiveRecord::Base
       )
   end
 
-  def comment item, content
-    self.comments.create!(item_id: item.id, content: content)
+  def comment id, content
+    self.comments.create!(item_id: id, content: content)
   end
 end

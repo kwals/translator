@@ -22,7 +22,8 @@
       <br>
       <%end%>
       <% if current_user %>
-        <form>
+        <form action="/comment" method="POST">
+          <input type="hidden" name="item_id" value=<%=@id%></input>
           <textarea class="form-control" name ="comment" rows="3"></textarea>
           <br>
           <button type="submit">Submit</button>
