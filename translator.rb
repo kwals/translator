@@ -2,8 +2,9 @@ require 'sinatra/base'
 require 'pry'
 
 #require 'rollbar'
-# require 'mandrill'
+require 'mandrill'
 require 'digest'
+require 'dotenv'
 
 require './db/setup'
 require './lib/all'
@@ -136,25 +137,35 @@ class Translator < Sinatra::Base
     if params["action"] == "enable"
       User.find(params["id"]).update!(admin: true)
       session[:success_message] = "Success! User #{User.find(params["id"]).name}, ID #{params["id"]}, admin privileges GRANTED."
-      redirect '/admin'
+      redirect to ('/admin')
     elsif params["action"] == "disable"
       x = User.find(params["id"]).update!(admin: false)
       session[:success_message] = "Success! User #{User.find(params["id"]).name}, ID #{params["id"]}, admin privileges REVOKED."
-      redirect '/admin'
+      redirect to('/admin')
     else
       session[:error_message] = "There was an error updating admin privileges for User ID #{params["id"]}. Please try again."
-      redirect '/admin'
+      redirect to('/admin')
     end
   end
 
+  get '/create_account' do
+    redirect to('/admin')
+  end
+
   post '/create_account' do
-    begin 
-      x = User.create_user(params["name"], params["email"], params["password"])
-      session[:success_message] = "User account for #{x.name} created succesfully. Account ID is #{x.id}."
-    rescue 
+    # begin 
+    x = User.create_user(params["name"], params["email"], params["password"])
+    if x 
+      session[:success_message] = "User account for #{x.name} created succesfully. Account ID is #{x.id}. Email did NOT send :("
+      m = Mandrill::API.new(ENV.fetch "MANDRILL_APIKEY")
+      if m.messages.send(x.welcome_email)
+        session[:success_message] = "User account for #{x.name} created succesfully. Account ID is #{x.id}. Email is sent to #{x.email}!"
+        redirect to('/admin')
+      end
+    else # rescue 
       session[:error_message] = "User creation failed. Please try again."
-    ensure 
-      redirect '/admin'
+    # ensure 
+      redirect to('/admin')
     end
   end
 

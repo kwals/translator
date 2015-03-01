@@ -24,4 +24,14 @@ class User <ActiveRecord::Base
   def self.create_user name, email, password
     User.create!(name: name, email: email.downcase, password: Digest::SHA1.hexdigest(password))
   end
+
+  def welcome_email
+    {
+        :subject => "Welcome to Translator",
+        :from_name => "Translator Team",
+        :text => "Hi! Welcome to Translator. Come visit our site: ___. Your username is #{name}. Your current password is #{password}. Log in and change it because SECURITY. :)",
+        :to => [{:email=> "#{email}", :name => "#{name}"}],
+        :from_email=>"DCIronYard@gmail.com"
+        }
+  end
 end
