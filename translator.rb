@@ -30,6 +30,10 @@ class Translator < Sinatra::Base
     end
   end
 
+  def make_password
+    ('a'..'z').to_a.shuffle[0,8 + rand(4)].join
+  end
+
   LOGIN_REQUIRED_ROUTES.each do |path|
     before path do
       if current_user.nil?
@@ -63,10 +67,12 @@ class Translator < Sinatra::Base
       else
         redirect to('/')
       end
+      session[:success_message] = "You have been logged in!"
     else
       @error = true 
       status 422
       erb :home
+      session[:error_message] = "Login failed. Please try again."
     end
   end
 
@@ -153,18 +159,19 @@ class Translator < Sinatra::Base
   end
 
   post '/create_account' do
-    # begin 
-    x = User.create_user(params["name"], params["email"], params["password"])
-    if x 
+    begin 
+      session[:temp_password] = make_password
+      x = User.create_user(params["name"], params["email"], session[:temp_password])
       session[:success_message] = "User account for #{x.name} created succesfully. Account ID is #{x.id}. Email did NOT send :("
       m = Mandrill::API.new(ENV.fetch "MANDRILL_APIKEY")
-      if m.messages.send(x.welcome_email)
+      if m.messages.send(x.welcome_email(session[:temp_password]))
         session[:success_message] = "User account for #{x.name} created succesfully. Account ID is #{x.id}. Email is sent to #{x.email}!"
         redirect to('/admin')
       end
-    else # rescue 
+    rescue 
       session[:error_message] = "User creation failed. Please try again."
-    # ensure 
+    ensure 
+      session.delete(:temp_password)
       redirect to('/admin')
     end
   end
